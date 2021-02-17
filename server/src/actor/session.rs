@@ -72,7 +72,7 @@ where
     fn handle(&mut self, msg: Result<ws::Message, ws::ProtocolError>, ctx: &mut Self::Context) {
         match try_ctx!(msg, ctx) {
             ws::Message::Text(msg) => {
-                T::receive(self, msg, ctx);
+                T::receive(self, msg.to_string(), ctx);
             }
             ws::Message::Ping(msg) => {
                 self.hb = SystemTime::now();

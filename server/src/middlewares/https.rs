@@ -26,13 +26,12 @@ impl RedirectHttps {
     }
 }
 
-impl<S, B> Transform<S> for RedirectHttps
+impl<S, B> Transform<S, ServiceRequest> for RedirectHttps
 where
-    S: Service<Request = ServiceRequest, Response = ServiceResponse<B>, Error = actix_web::Error>,
+    S: Service<ServiceRequest, Response = ServiceResponse<B>, Error = actix_web::Error>,
     S::Future: 'static,
     B: 'static,
 {
-    type Request = S::Request;
     type Response = S::Response;
     type Error = S::Error;
     type Transform = RedirectHttpsMiddleware<S>;
@@ -57,13 +56,12 @@ pub struct RedirectHttpsMiddleware<S> {
     redirect: bool,
 }
 
-impl<S, B> Service for RedirectHttpsMiddleware<S>
+impl<S, B> Service<ServiceRequest> for RedirectHttpsMiddleware<S>
 where
-    S: Service<Request = ServiceRequest, Response = ServiceResponse<B>, Error = actix_web::Error>,
+    S: Service<ServiceRequest, Response = ServiceResponse<B>, Error = actix_web::Error>,
     S::Future: 'static,
     B: 'static,
 {
-    type Request = S::Request;
     type Response = S::Response;
     type Error = S::Error;
     type Future = Either<S::Future, Ready<Result<Self::Response, Self::Error>>>;
@@ -72,7 +70,7 @@ where
         self.service.poll_ready(ctx)
     }
 
-    fn call(&mut self, req: Self::Request) -> Self::Future {
+    fn call(&mut self, req: ServiceRequest) -> Self::Future {
         if req.connection_info().scheme() == "https" || !self.redirect {
             Either::Left(self.service.call(req))
         } else {

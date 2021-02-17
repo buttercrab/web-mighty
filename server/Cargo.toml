@@ -13,10 +13,10 @@ name = "server"
 mighty = { path = "../mighty", features = ["server"] }
 types = { path = "../types", features = ["server"] }
 
-actix = "0.10"
-actix-identity = "0.3"
-actix-web = { version = "3", features = ["openssl"] }
-actix-web-actors = "3"
+actix = "0.11.0-beta.1"
+actix-identity = { git = "https://github.com/andy128k/actix-extras", branch = "update-dependencies" }
+actix-web = { version = "4.0.0-beta.1", features = ["openssl"] }
+actix-web-actors = "4.0.0-beta.1"
 anyhow = "1.0"
 clap = "3.0.0-beta.2"
 config = "0.9"

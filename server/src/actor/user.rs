@@ -4,11 +4,10 @@ use crate::actor::session::Session;
 use crate::actor::{Hub, Main, Room, RoomUser};
 use crate::db::game::{change_rating, ChangeRatingForm};
 use crate::dev::*;
-use actix::clock::Duration;
 use actix::prelude::*;
 use mighty::prelude::State;
 use std::collections::HashSet;
-use std::time::SystemTime;
+use std::time::{Duration, SystemTime};
 
 /// Joined Room Information
 #[derive(Debug)]
