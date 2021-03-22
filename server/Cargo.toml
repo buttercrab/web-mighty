@@ -13,7 +13,7 @@ name = "server"
 mighty = { path = "../mighty", features = ["server"] }
 types = { path = "../types", features = ["server"] }
 
-actix = "0.10"
+actix = "0.11"
 actix-identity = "0.3"
 actix-web = { version = "3", features = ["openssl"] }
 actix-web-actors = "3"
